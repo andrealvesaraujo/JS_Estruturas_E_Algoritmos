@@ -126,4 +126,35 @@ console.log("Total: ", numbers.reduce( (previus, current) => previus+current))
 
 /// Métodos basicos de array do ES6
 
+console.log("Iterador")
+
+let iterator = numbers[Symbol.iterator]();
+
+for (const n of iterator) {
+    console.log(n)
+}
+
+console.log("Entries")
+
+let aEntries = numbers.entries();
+
+for (const n of aEntries) {
+    console.log(n)
+}
+
+console.log("Keys")
+
+let aKeys = numbers.keys();
+
+for (const n of aKeys) {
+    console.log(n)
+}
+
+console.log("Values")
+
+let aValues = numbers.values();
+
+for (const n of aValues) {
+    console.log(n)
+}
 
