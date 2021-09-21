@@ -158,3 +158,37 @@ for (const n of aValues) {
     console.log(n)
 }
 
+console.log("From")
+
+
+let numbers2 = Array.from(numbers)
+console.log(numbers2)
+let evens = Array.from(numbers, x => (x % 2 == 0))
+console.log(evens)
+
+console.log("Of")
+
+
+let numbers3 = Array.of(20,21,22,23,24,25)
+console.log(numbers3)
+let numbers4 = Array.of(...numbers)
+console.log(numbers4)
+
+console.log("Fill")
+
+
+let numFill = Array(6).fill(1)
+console.log(numFill)
+numFill = numFill.fill(2,1)
+console.log(numFill)
+numFill = numFill.fill(3,4,6)
+console.log(numFill)
+
+console.log("CopyWithin")
+
+
+let copyArray = [1,2,3,4,5,6]
+copyArray.copyWithin(0,3)
+console.log(copyArray)
+copyArray.copyWithin(1,3,5)
+console.log(copyArray)
