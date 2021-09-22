@@ -284,6 +284,16 @@ console.log("Convertendo Array para String")
 console.log(numbers.toString())
 console.log(numbers.join("/"))
 
+console.log("Classe TypedArray")
+
+let length = 10
+let int16 = new Int16Array(length)
+for(let i=0; i <length; i++) {
+    int16[i] = i + 1
+}
+console.log(int16)
+
+
 
 
 
