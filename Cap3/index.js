@@ -254,6 +254,41 @@ friendsNames.sort((a,b)=> a.localeCompare(b))
 console.log(friendsNames)
 
 
+console.log("Pesquisa: indexOf e lastIndexOf")
+
+console.log(numbers.indexOf(10))
+console.log(numbers.indexOf(100))
+
+console.log((numbers.sort((a,b)=> b - a )).lastIndexOf(10))
+console.log(numbers.lastIndexOf(100))
+
+numbers.sort(compare)
+
+console.log("Pesquisa: find and findIndex")
+
+multiple7 = (element,index,array) => {
+    return (element % 7 == 0)
+}
+
+console.log(numbers.find(multiple7))
+console.log(numbers.findIndex(multiple7))
+
+console.log("Pesquisa: includes")
+
+console.log(numbers.includes(8))
+console.log(numbers.includes(20))
+console.log(numbers.includes(8,10))
+
+console.log("Convertendo Array para String")
+
+console.log(numbers.toString())
+console.log(numbers.join("/"))
+
+
+
+
+
+
 
 
 
