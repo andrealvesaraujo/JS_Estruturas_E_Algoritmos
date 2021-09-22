@@ -192,3 +192,68 @@ copyArray.copyWithin(0,3)
 console.log(copyArray)
 copyArray.copyWithin(1,3,5)
 console.log(copyArray)
+
+console.log("Ordenando elementos")
+
+numbers.reverse()
+console.log(numbers)
+
+numbers.sort()
+console.log(numbers)
+
+numbers.sort((a,b)=> a - b)
+console.log(numbers)
+
+compare = (a,b) => {
+    switch(true) {
+        case (a>b): return 1
+        case (a<b): return -1
+        default: return 0    
+    }
+}
+numbers.sort(compare)
+console.log(numbers)
+
+console.log("Ordenando personalizada")
+
+const friends = [
+    {name: "Jorge", age: 50},
+    {name: "Lucas", age: 25},
+    {name: "Matheus", age: 30}
+]
+
+comparePeople = (a,b) => {
+    switch(true) {
+        case (a.age>b.age): return 1
+        case (a.age<b.age): return -1
+        default: return 0    
+    }
+}
+
+friends.sort(comparePeople)
+console.log(friends)
+
+
+console.log("Ordenando Strings")
+
+const friendsNames = [ "Ana", "ana", "Lucas", "lucas", "Sérgio", "Sergio" ]
+
+comparePeople = (a,b) => {
+    switch(true) {
+        case (a.toLowerCase()>b.toLowerCase()): return 1
+        case (a.toLowerCase()<b.toLowerCase()): return -1
+        default: return 0    
+    }
+}
+
+friendsNames.sort(comparePeople)
+console.log(friendsNames)
+
+
+friendsNames.sort((a,b)=> a.localeCompare(b))
+console.log(friendsNames)
+
+
+
+
+
