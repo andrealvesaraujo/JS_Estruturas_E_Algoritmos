@@ -246,3 +246,60 @@ weakMapStack.pop()
 weakMapStack.pop()
 
 console.log(weakMapStack.toString())
+
+console.log("Convertendo Numeros Decimais para Binários")
+
+function decimalToBinary(decNumber) {
+    const remStack = new Stack()
+    let number = decNumber
+    let rem;
+    let binaryString = ''
+
+    while(number > 0) {
+        rem = Math.floor(number % 2)
+        remStack.push(rem)
+        number = Math.floor(number / 2)
+    }
+
+    while(!remStack.isEmpty()) {
+        binaryString += remStack.pop().toString()
+    }
+
+    return binaryString
+}
+
+console.log("Decimal: 10 e Binario: " + decimalToBinary(10))
+console.log("Decimal: 233 e Binario: " + decimalToBinary(233))
+console.log("Decimal: 1000 e Binario: " + decimalToBinary(1000))
+
+
+console.log("Convertendo Numeros Decimais para Binários")
+
+function decimalToAnyBase(decNumber, base) {
+    const remStack = new Stack()
+    let number = decNumber
+    let digits = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    let rem;
+    let binaryString = ''
+
+    if(!(base>=2 && base <=36)) {
+        return ''
+    }
+
+    while(number > 0) {
+        rem = Math.floor(number % base)
+        remStack.push(rem)
+        number = Math.floor(number / base)
+    }
+
+    while(!remStack.isEmpty()) {
+        binaryString += digits[remStack.pop()]
+    }
+
+    return binaryString
+}
+
+console.log("Decimal: 1000 e Binario: " + decimalToAnyBase(1000,2))
+console.log("Decimal: 1000 e Octal: " + decimalToAnyBase(1000,8))
+console.log("Decimal: 1000 e Hexadecimal: " + decimalToAnyBase(1000,16))
+console.log("Decimal: 1000 e Base 35: " + decimalToAnyBase(1000, 35))
