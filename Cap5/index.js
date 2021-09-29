@@ -205,3 +205,72 @@ console.log("Deque: ", deque.toString())
 deque.addFront("Jack")
 
 console.log("Deque: ", deque.toString())
+
+console.log("Algoritm Hot Potatoe")
+
+
+function hotPotato(elementList, num) {
+    const queue = new Queue()
+    const eliminatedList = []
+
+    for (let i = 0; i < elementList.length; i++) {
+        queue.enqueue(elementList[i])
+    }
+
+    while(queue.size() > 1) {
+        for (let i = 0; i < num; i++) {
+            queue.enqueue(queue.dequeue())
+        }
+        eliminatedList.push(queue.dequeue())
+    }
+
+    return {
+        eliminated: eliminatedList,
+        winner : queue.dequeue()
+    }
+}
+
+const names = ["Jonh", "Jake" , "Camila", "Ingrid", "Carl"]
+const result = hotPotato(names,7)
+
+result.eliminated.forEach(name =>{
+    console.log(`${name} was eliminated from the Hot Potatoe`)
+})
+
+console.log(`winner: ${result.winner}`)
+
+console.log("Algoritm palindrome checker")
+
+
+function palindromeChecker(aString) {
+
+    if(aString === undefined || aString === null || (aString !=null && aString.length ===0)){
+        return false
+    }
+
+    const deque = new Deque()
+    const lowerString = aString.toLocaleLowerCase().split(' ').join('')
+
+    let isEqual = true
+    let firstChar, lastChar
+
+    for (let i = 0; i < lowerString.length; i++) {
+        deque.addBack(lowerString.charAt(i)) 
+    }
+
+    while(deque.size() > 1 && isEqual) {
+        firstChar = deque.removeFront()
+        lastChar = deque.removeBack()
+        if(firstChar !== lastChar) {
+            isEqual = false
+        }
+    }
+    return isEqual
+}
+
+console.log("aa: ", palindromeChecker("aa"))
+console.log("adr: ", palindromeChecker("adr"))
+console.log("level: ", palindromeChecker("level"))
+console.log("level is level: ", palindromeChecker("level is level"))
+console.log("Was it a car or a cat i saw: ", palindromeChecker("Was it a car or a cat i saw"))
+
