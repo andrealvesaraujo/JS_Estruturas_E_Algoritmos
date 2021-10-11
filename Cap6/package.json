@@ -1,0 +1,20 @@
+{
+  "name": "cap5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "babel-cli": "^6.26.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.3"
+  },
+  "scripts": {
+    "babel-1": "babel area.js --out-dir lib",
+    "babel-2": "babel book.js --out-dir lib",
+    "babel-3": "babel index.js --out-dir lib",
+    "typescript": "npx tsc typescript.ts"
+  },
+  "author": "",
+  "license": "ISC"
+}
