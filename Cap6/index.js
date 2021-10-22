@@ -28,15 +28,15 @@ export default class LinkedList {
     }
 
     insert(element, index) {
-        if(index >= 0 && index <= this.size()) {
+        if(index >= 0 && index <= this.count) {
             const node = new Node(element)
             if(index===0){
-                let current = this.head
+                const current = this.head
                 node.next = current
                 this.head = node
             }else {
                 const previus = this.getElementAt(index-1)
-                let current = previus.next 
+                const current = previus.next 
                 node.next = current
                 previus.next = node
             }
@@ -48,7 +48,7 @@ export default class LinkedList {
 
     removeAt(index) {
 
-        if(index>=0 && index < this.size()) {
+        if(index>=0 && index < this.count) {
 
             let current = this.head
             if(index === 0){
@@ -82,7 +82,7 @@ export default class LinkedList {
 
     indexOf(element) {
         let current = this.head 
-        for(let i = 0; i < this.size() && current!=null; i++){
+        for(let i = 0; i < this.count && current!=null; i++){
             if(this.equalsFn(element, current.element)){
                 return i
             }
@@ -109,7 +109,7 @@ export default class LinkedList {
     }
     
     toString() {
-        if(this.isEmpty()){
+        if(this.head == null){
             return ''
         }
         let objString = `${this.head.element}`
@@ -195,6 +195,19 @@ class DoublyLinkedList extends LinkedList{
         return false
     }
 
+    push(element) {
+        const node = new DoublyNode(element);
+        if (this.head == null) {
+          this.head = node;
+          this.tail = node;
+        } else {
+          this.tail.next = node;
+          node.prev = this.tail;
+          this.tail = node;
+        }
+        this.count++;
+    }
+
     removeAt(index) {
         if(index >=0 && index < this.count){
             let current = this.head
@@ -212,7 +225,7 @@ class DoublyLinkedList extends LinkedList{
             }else{
                 current = this.getElementAt(index)
                 const previous = current.prev
-                console.log(previus)
+                console.log(previous)
                 previous.next = current.next
                 current.next.prev = previous
             }
@@ -311,3 +324,118 @@ console.log("Removed Element of index 0: ", circularlist.removeAt(0))
 console.log("Removed Element of index 2: ", circularlist.removeAt(2))
 console.log("Removed Element of index 1: ", circularlist.removeAt(1))
 console.log(`CircularLinkedList ${circularlist}`)
+
+
+const Compare = {
+    LESS_THAN: -1,
+    BIGGER_THAN: 1
+}
+
+export function defaultCompare(a,b) {
+    if(a===b) {
+        return 0
+    }
+    return a < b ? Compare.LESS_THAN : Compare.BIGGER_THAN    
+}
+
+class SortedLinkedList extends LinkedList {
+    constructor(equalsFn = defaultEquals, compareFn = defaultCompare){
+        super(equalsFn)
+        this.compareFn = compareFn
+    }
+
+    insert(element, index=0){
+        if(this.isEmpty()) {
+            return super.insert(element,0)
+        }
+        const pos = this.getIndexNextSortedElement(element)
+        return super.insert(element,pos)
+    }   
+
+    getIndexNextSortedElement(element) {
+        let current = this.head
+        let i = 0
+        for(; i< this.size() && current; i++){
+            const comp = this.compareFn(element,current.element)
+            if(comp === Compare.LESS_THAN){
+                return i
+            }
+            current = current.next
+        }
+        return i
+    }
+}
+
+
+const sortedLinkedList = new SortedLinkedList()
+
+sortedLinkedList.insert(10)
+console.log(`SortedLinkedList ${sortedLinkedList}`)
+sortedLinkedList.insert(30)
+console.log(`SortedLinkedList ${sortedLinkedList}`)
+sortedLinkedList.insert(35)
+console.log(`SortedLinkedList ${sortedLinkedList}`)
+sortedLinkedList.insert(15)
+console.log(`SortedLinkedList ${sortedLinkedList}`)
+sortedLinkedList.insert(40)
+console.log(`SortedLinkedList ${sortedLinkedList}`)
+sortedLinkedList.insert(1)
+console.log(`SortedLinkedList ${sortedLinkedList}`)
+
+
+class StackLinkedList {
+    constructor() {
+        this.items = new DoublyLinkedList()
+    }
+
+    push(element){
+        this.items.push(element)
+    }
+
+    pop() {
+        if(this.isEmpty()) {
+            return undefined
+        }
+        return this.items.removeAt(this.size() - 1)
+    }
+
+    peek() {
+        if(this.isEmpty()) {
+            return undefined
+        }
+        return this.items.getElementAt(this.size() - 1).element
+    }
+
+    isEmpty(){
+        return this.items.isEmpty()
+    } 
+
+    size(){
+        return this.items.size()
+    }
+
+    clear(){
+        this.items.clear()        
+    }
+
+    toString(){
+        return this.items.toString()
+    }
+}
+
+
+const stackLinkedList = new StackLinkedList()
+stackLinkedList.push(5)
+stackLinkedList.push(10)
+stackLinkedList.push(20)
+stackLinkedList.push(15)
+
+console.log(`StackLinkedList ${stackLinkedList}`)
+console.log("StackLinkedList is Empty? ", stackLinkedList.isEmpty())
+console.log("StackLinkedList Size: ", stackLinkedList.size())
+console.log("StackLinkedList PEEK: ", stackLinkedList.peek())
+
+console.log("StackLinkedList POP: ", stackLinkedList.pop())
+console.log(`StackLinkedList ${stackLinkedList}`)
+console.log("StackLinkedList POP: ", stackLinkedList.pop())
+console.log(`StackLinkedList ${stackLinkedList}`)
