@@ -92,7 +92,7 @@ export default class Dictionary {
     }
 
     size() {
-        return Object.key(this.keyValues()).length;
+        return Object.keys(this.keyValues()).length;
     }
 
     isEmpty() {
@@ -117,3 +117,33 @@ export default class Dictionary {
 }
 
 console.log("My Dictionary");
+
+const dictionary = new Dictionary();
+
+console.log("Adding Gandalf and his email")
+dictionary.set('Gandalf', 'gandalf@email.com')
+
+console.log("Adding Aragorn and his email")
+dictionary.set('Aragorn', 'aragorn@email.com')
+
+console.log("Adding Gimli and his email")
+dictionary.set('Gimli', 'gimli@email.com')
+
+console.log("Dictionary size: ",dictionary.size())
+console.log("Dictionary keys: ",dictionary.keys())
+console.log("Dictionary values: ", dictionary.values())
+console.log("Get Aragorn email: ", dictionary.get('Aragorn'));
+console.log("Check If Have Legolas: ", dictionary.hasKey('Legolas'));
+console.log("Remove Gimli: ", dictionary.remove('Gimli'));
+
+console.log("Adding Legolas and his email")
+dictionary.set('Legolas', 'legolas@email.com')
+
+console.log("Dictionary keys: ",dictionary.keys())
+console.log("Dictionary values: ", dictionary.values())
+console.log("Dictionary keyValues: ", dictionary.keyValues())
+
+console.log('Dictionary forEach: ')
+dictionary.forEach((k,v)=>{
+    console.log(`key: ${k}, value: ${v}`)
+})
