@@ -400,7 +400,7 @@ class LinkedList {
 
 console.log("My HashTableSeparateChaining");
 
-class MyHashTableSeparateChaining {
+class HashTableSeparateChaining {
     constructor(toStrFn = defaultToString) {
         this.toStrFn = toStrFn
         this.table = {}
@@ -472,7 +472,7 @@ class MyHashTableSeparateChaining {
 
 
 
-const hashTableSeparateChaining = new MyHashTableSeparateChaining();
+const hashTableSeparateChaining = new HashTableSeparateChaining();
 
 console.log("Adding Ygritte and his email")
 hashTableSeparateChaining.put('Ygritte', 'Ygritte@email.com')
@@ -502,3 +502,110 @@ console.log("Get Sargeras email: ", hashTableSeparateChaining.get('Sargeras'));
 console.log("Remove Nathan: ", hashTableSeparateChaining.remove('Nathan'))
 console.log("Remove Aethelwulf: ", hashTableSeparateChaining.remove('Aethelwulf'))
 console.log("Get Aethelwulf email: ", hashTableSeparateChaining.get('Aethelwulf'));
+
+
+console.log("My HashTableLinearProbing");
+
+class HashTableLinearProbing {
+    constructor(toStrFn = defaultToString) {
+        this.toStrFn = toStrFn
+        this.table = {}
+    }
+
+    loseloseHashCode(key) {
+        if(typeof key === 'number') {       
+            return key
+        }
+        const tableKey = this.toStrFn(key)
+        let hash = 0
+        for(let i = 0; i < tableKey.length; i++) {
+            hash += tableKey.charCodeAt(i)
+        }
+        return hash % 37
+    }
+
+    djb2HashCode(key) {
+        const tableKey = this.toStrFn(key)
+        let hash = 5381
+        for(let i = 0; i < tableKey.length; i++) {
+            hash = (hash * 33) + tableKey.charCodeAt(i)
+        }
+        return hash % 1013
+    }
+
+    hashCode(key) {
+        return this.loseloseHashCode(key)
+    }
+
+    put(key, value) {
+        if(key != null && value != null) {
+            const position = this.hashCode(key)
+            if(this.table[position] == null) {
+                this.table[position] = new ValuePair(key, value)
+            } else {
+                let index = position + 1
+                while(this.table[index] !=null) {
+                    index++
+                }
+                this.table[index] = new ValuePair(key, value)
+            }
+            return true
+        }
+        return false
+    }
+
+    get(key){
+        const position = this.hashCode(key)
+        if(this.table[position] != null) {
+            if(this.table[position].key === key){
+                return this.table[position].value
+            }
+            let index = position + 1;
+
+            while(this.table[index] != null && this.table[index].key !== key){
+                index++
+            }
+            if(this.table[index] != null && this.table[index].key === key){
+                return this.table[position].value
+            }
+        }
+        return undefined
+    }
+
+    remove(key){
+        const position = this.hashCode(key)
+        if(this.table[position] != null) {
+            if(this.table[position].key === key){
+                delete this.table[position]
+                this.verifyRemoveSideEffects(key,position)
+                return true
+            }
+            let index = position + 1;
+            while(this.table[index] != null && this.table[index].key !== key){
+                index++
+            }
+            if(this.table[index] != null && this.table[index].key === key){
+                delete this.table[index]
+                this.verifyRemoveSideEffects(key,index)
+                return true
+            }
+        }
+        return false
+    }
+
+    verifyRemoveSideEffects(key, removedPosition){
+        const hash = this.hashCode(key)
+        let index = removedPosition + 1
+        while(this.table[index] != null){
+            const posHash = this.hashCode(this.table[index].key)
+            if(posHash <= hash || posHash <=removedPosition){
+                this.table[removedPosition] = this.table[index]
+                delete this.table[index]
+                removedPosition = index
+            }
+            index++
+        }
+    }
+
+}
+
