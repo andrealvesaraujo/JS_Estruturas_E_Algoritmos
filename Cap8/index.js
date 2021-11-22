@@ -470,3 +470,35 @@ class MyHashTableSeparateChaining {
 
 }
 
+
+
+const hashTableSeparateChaining = new MyHashTableSeparateChaining();
+
+console.log("Adding Ygritte and his email")
+hashTableSeparateChaining.put('Ygritte', 'Ygritte@email.com')
+
+console.log("Adding Jonathan and his email")
+hashTableSeparateChaining.put('Jonathan', 'Jonathan@email.com')
+
+console.log("Adding Nathan and his email")
+hashTableSeparateChaining.put('Nathan', 'Nathan@email.com')
+
+console.log("Adding Aethelwulf and his email")
+hashTableSeparateChaining.put('Aethelwulf', 'Aethelwulf@email.com')
+
+console.log("Adding Sargeras and his email")
+hashTableSeparateChaining.put('Sargeras', 'Sargeras@email.com')
+
+
+console.log(hashTableSeparateChaining.hashCode('Ygritte') + ' - Ygritte');
+console.log(hashTableSeparateChaining.hashCode('Jonathan') + ' - Jonathan');
+console.log(hashTableSeparateChaining.hashCode('Aethelwulf') + ' - Aethelwulf');
+console.log(hashTableSeparateChaining.hashCode('Nathan') + ' - Nathan');
+console.log(hashTableSeparateChaining.hashCode('Sargeras') + ' - Sargeras');
+console.log("Get Ygritte email: ", hashTableSeparateChaining.get('Ygritte'));
+console.log("Get Jonathan email: ", hashTableSeparateChaining.get('Jonathan'));
+console.log("Get Aethelwulf email: ", hashTableSeparateChaining.get('Aethelwulf'));
+console.log("Get Sargeras email: ", hashTableSeparateChaining.get('Sargeras'));
+console.log("Remove Nathan: ", hashTableSeparateChaining.remove('Nathan'))
+console.log("Remove Aethelwulf: ", hashTableSeparateChaining.remove('Aethelwulf'))
+console.log("Get Aethelwulf email: ", hashTableSeparateChaining.get('Aethelwulf'));
