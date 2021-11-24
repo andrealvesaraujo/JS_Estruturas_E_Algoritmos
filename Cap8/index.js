@@ -470,8 +470,6 @@ class HashTableSeparateChaining {
 
 }
 
-
-
 const hashTableSeparateChaining = new HashTableSeparateChaining();
 
 console.log("Adding Ygritte and his email")
@@ -502,6 +500,8 @@ console.log("Get Sargeras email: ", hashTableSeparateChaining.get('Sargeras'));
 console.log("Remove Nathan: ", hashTableSeparateChaining.remove('Nathan'))
 console.log("Remove Aethelwulf: ", hashTableSeparateChaining.remove('Aethelwulf'))
 console.log("Get Aethelwulf email: ", hashTableSeparateChaining.get('Aethelwulf'));
+
+console.log("--------------------------------")
 
 
 console.log("My HashTableLinearProbing");
@@ -658,3 +658,76 @@ console.log("Get Sargeras email: ", hashTableLinearProbing.get('Sargeras'));
 console.log("Remove Nathan: ", hashTableLinearProbing.remove('Jonathan'))
 console.log(hashTableLinearProbing.hashCode('Jonathan') + ' - Jonathan');
 
+console.log("--------------------------------")
+
+console.log("Map of ES2015");
+
+const map = new Map();
+
+console.log("Adding Gandalf and his email")
+map.set('Gandalf', 'gandalf@email.com')
+
+console.log("Adding Aragorn and his email")
+map.set('Aragorn', 'aragorn@email.com')
+
+console.log("Adding Gimli and his email")
+map.set('Gimli', 'gimli@email.com')
+
+console.log("Check If Have Gandalf: ", map.hasKey('Gandalf'));
+console.log("Map size: ", map.size)
+console.log("Map keys: ",map.keys())
+console.log("Map values: ", map.values())
+console.log("Get Aragorn email: ", map.get('Aragorn'));
+console.log("Remove Gimli: ", map.delete('Gimli'));
+console.log("Check If Have Gimli: ", map.hasKey('Gimli'));
+
+console.log("--------------------------------")
+
+console.log("WeakMap of ES2015");
+
+const weakMap = new WeakMap();
+
+console.log("Adding Gandalf and his email")
+weakMap.set('Gandalf', 'gandalf@email.com')
+
+console.log("Adding Aragorn and his email")
+weakMap.set('Aragorn', 'aragorn@email.com')
+
+console.log("Adding Gimli and his email")
+weakMap.set('Gimli', 'gimli@email.com')
+
+console.log("Check If Have Gandalf: ", weakMap.hasKey('Gandalf'));
+console.log("weakMap size: ", weakMap.size)
+console.log("Get Aragorn email: ", weakMap.get('Aragorn'));
+console.log("Remove Gimli: ", weakMap.delete('Gimli'));
+console.log("Check If Have Gimli: ", weakMap.hasKey('Gimli'));
+
+console.log("--------------------------------")
+
+console.log("WeakSet of ES2015");
+
+const weakSet = new WeakSet();
+
+console.log("Adding Gandalf and his email")
+weakSet.set('Gandalf', 'gandalf@email.com')
+
+console.log("Adding Aragorn and his email")
+weakSet.set('Aragorn', 'aragorn@email.com')
+
+console.log("Adding Gimli and his email")
+weakSet.set('Gimli', 'gimli@email.com')
+
+console.log("Adding Another Gandalf and his email")
+weakSet.set('Gandalf', 'gandalf@email.com')
+
+console.log("Adding Another Aragorn and his email")
+weakSet.set('Aragorn', 'aragorn@email.com')
+
+console.log("Adding Another Gimli and his email")
+weakSet.set('Gimli', 'gimli@email.com')
+
+console.log("Check If Have Gandalf: ", weakSet.hasKey('Gandalf'));
+console.log("weakMap size: ", weakSet.size)
+console.log("Get Aragorn email: ", weakSet.get('Aragorn'));
+console.log("Remove Gimli: ", weakSet.delete('Gimli'));
+console.log("Check If Have Gimli: ", weakSet.hasKey('Gimli'));
