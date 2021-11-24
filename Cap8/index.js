@@ -535,6 +535,7 @@ class HashTableLinearProbing {
 
     hashCode(key) {
         return this.loseloseHashCode(key)
+        // return this.djb2HashCode(key)
     }
 
     put(key, value) {
@@ -608,4 +609,52 @@ class HashTableLinearProbing {
     }
 
 }
+
+
+const hashTableLinearProbing = new HashTableLinearProbing();
+
+console.log("Adding Ygritte and his email")
+hashTableLinearProbing.put('Ygritte', 'Ygritte@email.com')
+
+console.log("Adding Jonathan and his email")
+hashTableLinearProbing.put('Jonathan', 'Jonathan@email.com')
+
+console.log("Adding Jamie and his email")
+hashTableLinearProbing.put('Jamie', 'Jamie@email.com')
+
+console.log("Adding Jack and his email")
+hashTableLinearProbing.put('Jack', 'Jack@email.com')
+
+console.log("Adding Jasmine and his email")
+hashTableLinearProbing.put('Jasmine', 'Jasmine@email.com')
+
+console.log("Adding Jake and his email")
+hashTableLinearProbing.put('Jake', 'Jake@email.com')
+
+console.log("Adding Nathan and his email")
+hashTableLinearProbing.put('Nathan', 'Nathan@email.com')
+
+console.log("Adding Aethelstan and his email")
+hashTableLinearProbing.put('Aethelstan', 'Aethelstan@email.com')
+
+console.log("Adding Aethelwulf and his email")
+hashTableLinearProbing.put('Aethelwulf', 'Aethelwulf@email.com')
+
+console.log("Adding Sue and his email")
+hashTableLinearProbing.put('Sue', 'Sue@email.com')
+
+console.log("Adding Sargeras and his email")
+hashTableLinearProbing.put('Sargeras', 'Sargeras@email.com')
+
+console.log(hashTableLinearProbing.hashCode('Ygritte') + ' - Ygritte');
+console.log(hashTableLinearProbing.hashCode('Jonathan') + ' - Jonathan');
+console.log(hashTableLinearProbing.hashCode('Aethelwulf') + ' - Aethelwulf');
+console.log(hashTableLinearProbing.hashCode('Nathan') + ' - Nathan');
+console.log(hashTableLinearProbing.hashCode('Sargeras') + ' - Sargeras');
+console.log("Get Ygritte email: ", hashTableLinearProbing.get('Ygritte'));
+console.log("Get Jonathan email: ", hashTableLinearProbing.get('Jonathan'));
+console.log("Get Aethelwulf email: ", hashTableLinearProbing.get('Aethelwulf'));
+console.log("Get Sargeras email: ", hashTableLinearProbing.get('Sargeras'));
+console.log("Remove Nathan: ", hashTableLinearProbing.remove('Jonathan'))
+console.log(hashTableLinearProbing.hashCode('Jonathan') + ' - Jonathan');
 
