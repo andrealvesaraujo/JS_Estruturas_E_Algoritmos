@@ -68,6 +68,48 @@ export default class BinarySearchTree {
         }
     }
 
+    max(){
+        return this.maxNode(this.root)
+    }
+
+    maxNode(node){
+        let current = node
+        while(current != null && current.right != null){
+            current = current.right
+        }   
+        return current
+    }
+
+    min(){
+        return this.minNode(this.root)
+    }
+
+    minNode(node){
+        let current = node
+        while(current != null && current.left != null){
+            current = current.left
+        }   
+        return current
+    }
+
+
+    search(key){
+        return this.searchNode(this.root, key)
+    }
+
+    searchNode(node, key){
+        if(node == null){
+            return false
+        }  
+        if (this.compareFn(key, node.key) === Compare.LESS_THAN){
+            return this.searchNode(node.left, key)
+        } else if (this.compareFn(key, node.key) === Compare.BIGGER_THAN){
+            return this.searchNode(node.right, key)
+        } else {
+            return true
+        }
+    }
+
 }
 
 const tree = new BinarySearchTree();
@@ -99,5 +141,10 @@ console.log("preOrderTraverse")
 tree.preOrderTraverse(printNode)
 console.log("inOrderTraverse")
 tree.postOrderTraverse(printNode)
+
+console.log("Maximum Key: ", tree.max())
+console.log("Minimum Key: ", tree.min())
+console.log(tree.search(1) ? "Key 1 found" : "Key 1 not found" )
+console.log(tree.search(8) ? "Key 8 found" : "Key 8 not found" )
 
 console.log("----------------------------------------")
