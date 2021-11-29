@@ -110,6 +110,40 @@ export default class BinarySearchTree {
         }
     }
 
+    remove(key){
+        this.root = this.removeNode(this.root, key)
+    }
+
+    removeNode(node, key){
+        if(node == null){
+            return null
+        }  
+        if (this.compareFn(key, node.key) === Compare.LESS_THAN){
+            node.left = this.removeNode(node.left, key)
+            return node
+        } else if (this.compareFn(key, node.key) === Compare.BIGGER_THAN){
+            node.right = this.removeNode(node.right, key)
+            return node
+        } else {
+            if(node.left == null && node.right == null){
+                node = null
+                return node
+            }
+            if(node.left == null){
+                node = node.right
+                return node
+            } else if(node.right == null) {
+                node = node.left
+                return node
+            }
+            const aux = this.minNode(node.right)
+            node.key = aux.key
+            node.right = this.removeNode(node.right, aux.key)
+            return node
+        }
+    }
+    
+
 }
 
 const tree = new BinarySearchTree();
@@ -146,5 +180,12 @@ console.log("Maximum Key: ", tree.max())
 console.log("Minimum Key: ", tree.min())
 console.log(tree.search(1) ? "Key 1 found" : "Key 1 not found" )
 console.log(tree.search(8) ? "Key 8 found" : "Key 8 not found" )
+
+console.log("Remove 6 : ", tree.remove(6))
+console.log("Remove 5 : ", tree.remove(8))
+console.log("Remove 18: ", tree.remove(18))
+
+console.log("inOrderTraverse")
+tree.inOrderTraverse(printNode)
 
 console.log("----------------------------------------")
