@@ -1,4 +1,4 @@
-import { Node } from './models/node.js';
+import { Node, RedBlackNode, Colors } from './models/node.js';
 import { Compare, defaultCompare} from './util.js'
 
 console.log("BinarySearchTree")
@@ -322,3 +322,193 @@ class AVLTree extends BinarySearchTree {
 
 }
 
+
+console.log("----------------------------------------")
+console.log("RedBlackTree")
+
+class RedBlackTree extends BinarySearchTree {
+    constructor(compareFn=defaultCompare){
+        super(compareFn)
+        this.compareFn = compareFn
+        this.root = null
+    }
+
+    getNodeHeights(node){
+        if(node==null){
+            return -1
+        } 
+        return Math.max(this.getNodeHeights(node.left), this.getNodeHeights(node.right)) + 1
+    }
+
+    getBalanceFactor(node){
+        const heightDifference = this.getNodeHeights(node.left) - this.getNodeHeights(node.right)
+        switch(heightDifference) {
+            case -2:
+                return BalanceFactor.UNBALANCED_RIGHT
+            case -1: 
+                return BalanceFactor.SLIGHTLY_UNBALANCED_RIGHT
+            case 1:
+                return BalanceFactor.SLIGHTLY_UNBALANCED_LEFT
+            case 2:
+                return BalanceFactor.UNBALANCED_LEFT          
+            default:
+                return BalanceFactor.BALANCED      
+        }
+    }
+
+    rotationLL(node){
+        const tmp = node.left
+        node.left = tmp.right
+        if(tmp.right && tmp.right.key){
+            tmp.right.parent = node
+        }
+        tmp.parent = node.parent
+        if(!node.parent){
+            this.root = tmp
+        } else {
+            if(node === node.parent.left){
+                node.parent.left = tmp
+            }else{
+                node.parent.right = tmp
+            }
+        }
+        tmp.right = node
+        node.parent = tmp
+    }
+
+    
+    rotationRR(node){
+        const tmp = node.right
+        node.right = tmp.left
+        if(tmp.left && tmp.left.key){
+            tmp.left.parent = node
+        }
+        tmp.parent = node.parent
+        if(!node.parent){
+            this.root = tmp
+        } else {
+            if(node === node.parent.left){
+                node.parent.left = tmp
+            }else{
+                node.parent.right = tmp
+            }
+        }
+        tmp.left = node
+        node.parent = tmp
+    }
+
+    rotationLR(node){ 
+        node.left = this.rotationRR(node.left)
+        return this.rotationLL(node)
+    }
+
+    rotationRL(node){ 
+        node.right = this.rotationLL(node.right)
+        return this.rotationRR(node)
+    }
+
+    insert(key){
+        if(this.root == null){
+            this.root = new RedBlackNode(key)
+            this.root.color = Colors.BLACK
+        }else{
+            const newNode = this.insertNode(this.root, key)
+            this.fixTreeProperties(newNode)
+        }
+    }
+
+    insertNode(node, key){
+        if(this.compareFn(key,node.key) === Compare.LESS_THAN) {
+            if(node.left == null){
+                node.left = new RedBlackNode(key)
+                node.left.parent = node
+                return node.left
+            }else{
+                return this.insertNode(node.left, key)
+            }
+        } else if(node.right ==null) {
+            node.right = new RedBlackNode(key)
+            node.right.parent = node
+            return node.right
+        } else{
+            return this.insertNode(node.right, key)
+        }
+    }
+
+    remove(key){
+        this.root = this.removeNode(this.root, key)
+    }
+
+    removeNode(node,key){
+        node = super.removeNode(node, key)
+        if(node == null){
+            return node
+        }
+        const balanceFactor = this.getBalanceFactor(node)
+        if(balanceFactor === BalanceFactor.UNBALANCED_LEFT){
+            const balanceFactorLeft = this.getBalanceFactor(node.left)
+            if(balanceFactorLeft === BalanceFactor.BALANCED || balanceFactorLeft === BalanceFactor.SLIGHTLY_UNBALANCED_LEFT){
+                return this.rotationLL(node)
+            }
+            if(balanceFactorLeft === BalanceFactor.SLIGHTLY_UNBALANCED_RIGHT){
+                return this.rotationLR(node.left)
+            }
+        }
+        if(balanceFactor === BalanceFactor.UNBALANCED_RIGHT){
+            const balanceFactorRight = this.getBalanceFactor(node.right)
+            if(balanceFactorRight === BalanceFactor.BALANCED || balanceFactorRight === BalanceFactor.SLIGHTLY_UNBALANCED_RIGHT){
+                return this.rotationRR(node)
+            }
+            if(balanceFactorRight === BalanceFactor.SLIGHTLY_UNBALANCED_LEFT){
+                return this.rotationRL(node.right)
+            }
+        }
+        
+    }
+
+    fixTreeProperties(node) {
+        while(node && node.parent && node.parent.isRed() && node.color !== Colors.BLACK){
+            let parent = node.parent
+            const grandParent = parent.parent
+            if(grandParent && grandParent.left === parent){
+                const uncle = grandParent.right
+                if(uncle && uncle.color === Colors.RED ){
+                    grandParent.color = Colors.RED
+                    parent.color = Colors.BLACK
+                    uncle.color = Colors.BLACK
+                    node = grandParent
+                }else{
+                    if(node === parent.right){
+                        this.rotationRR(parent)
+                        node = parent
+                        parent = node.parent
+                    }
+                    this.rotationLL(grandParent)
+                    parent.color = Colors.BLACK
+                    grandParent.color = Colors.RED
+                    node=parent
+                }
+            }else{
+                const uncle = grandParent.left
+                if(uncle && uncle.color === Colors.RED ){
+                    grandParent.color = Colors.RED
+                    parent.color = Colors.BLACK
+                    uncle.color = Colors.BLACK
+                    node = grandParent
+                }else{
+                    if(node === parent.left){
+                        this.rotationLL(parent)
+                        node = parent
+                        parent = node.parent
+                    }
+                    this.rotationRR(grandParent)
+                    parent.color = Colors.BLACK
+                    grandParent.color = Colors.RED
+                    node=parent
+                }
+            }
+            this.root.color = Colors.BLACK
+        }   
+    }
+
+}
