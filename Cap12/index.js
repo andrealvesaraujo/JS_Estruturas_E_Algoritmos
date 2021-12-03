@@ -56,9 +56,9 @@ export default class Graph {
     }
 }
 
-const graph = new Graph()
+let graph = new Graph()
 console.log("Create a Not Directed Graph")
-const myVertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
+let myVertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
 
 for(let i = 0; i < myVertices.length; i++) {
     console.log(`Add vertice ${myVertices[i]} in Graph`)
@@ -98,6 +98,9 @@ const initializeColors = (vertices) => {
     return color;
 }
 
+console.log("------------Breadth First Search(BFS)------")
+
+
 export const breadthFirstSearch = (graph, startVertext, callback) => {
     const vertices = graph.getVertices()
     const adjList = graph.getAdjList()
@@ -123,6 +126,7 @@ export const breadthFirstSearch = (graph, startVertext, callback) => {
 }
 
 const printVertex = (value) => console.log("Visited vertex: "+value)
+console.log("Using BFS to find every vertex:")
 breadthFirstSearch(graph, myVertices[0] ,printVertex)
 
 const BFS = (graph, startVertext) => {
@@ -158,10 +162,8 @@ const BFS = (graph, startVertext) => {
     }
 }
 
+console.log("Using BFS to find shortestPath to A for every vertex:")
 const shortestPathA = BFS(graph, myVertices[0])
-console.log(shortestPathA)
-
-console.log("shortestPath to A for every vertex:")
 const fromVertex = myVertices[0]
 for(let i = 0; i < myVertices.length; i++){
     const toVertex = myVertices[i]
@@ -176,3 +178,123 @@ for(let i = 0; i < myVertices.length; i++){
     }
     console.log(s)
 }
+
+console.log("------------Depth First Search(DFS)------")
+
+const depthFirstSearch = (graph, callback) => {
+    const vertices = graph.getVertices()
+    const adjList = graph.getAdjList()
+    const color = initializeColors(vertices)
+    for (let i = 0; i < vertices.length; i++){
+        if(color[vertices[i]] === Colors.WHITE){
+            depthFirstSearchVisit(vertices[i], color, adjList, callback)
+        }
+    }
+
+}
+
+const depthFirstSearchVisit = (u, color, adjList, callback) => {
+    color[u] = Colors.GREY
+    if(callback){
+        callback(u)
+    } 
+    const neighbors = adjList.get(u)
+    for(let i = 0; i < neighbors.length; i++) {
+        const w = neighbors[i]
+        if(color[w] === Colors.WHITE) {
+            depthFirstSearchVisit(w,color, adjList, callback)
+        }
+    }
+    color[u] = Colors.BLACK
+}
+console.log("Using DFS to find every vertex:")
+depthFirstSearch(graph, printVertex)
+
+export const DFS = graph => {
+    const vertices = graph.getVertices()
+    const adjList = graph.getAdjList()
+    const color = initializeColors(vertices)
+    const d = {}
+    const f = {}
+    const p = {}
+    const time = { count: 0 }
+    for (let i = 0; i < vertices.length; i++) {
+        f[vertices[i]] = 0 
+        d[vertices[i]] = 0 
+        p[vertices[i]] = null
+    }
+    for (let i = 0; i < vertices.length; i++) {
+        if(color[vertices[i]] === Colors.WHITE){
+            DFSVisit(vertices[i], color, d, f, p, time, adjList)
+        }
+    }
+    return {
+        discovery : d,
+        finished: f,
+        predecessors : p
+    }
+}
+
+const DFSVisit = (u, color, d, f, p, time, adjList) => {
+    color[u] = Colors.GREY
+    d[u] = ++time.count
+    const neighbors = adjList.get(u)
+    for(let i = 0; i < neighbors.length; i++) {
+        const w = neighbors[i]
+        if(color[w] === Colors.WHITE){
+            p[w] = u
+            DFSVisit(w, color, d, f, p, time, adjList)
+        }
+    }
+    color[u] = Colors.BLACK
+    f[u] = ++time.count
+}
+
+console.log("Create a Directed Graph")
+
+graph = new Graph(true)
+myVertices = [ 'A', 'B', 'C', 'D', 'E', 'F']
+for(let i = 0; i < myVertices.length; i++) {
+    console.log(`Add vertice ${myVertices[i]} in Graph`)
+    graph.addVertex(myVertices[i])
+}
+console.log("Add Edge A to C")
+graph.addEdge('A', 'C')
+console.log("Add Edge A to D")
+graph.addEdge('A', 'D')
+console.log("Add Edge B to D")
+graph.addEdge('B', 'D')
+console.log("Add Edge B to E")
+graph.addEdge('B', 'E')
+console.log("Add Edge C to F")
+graph.addEdge('C', 'F')
+console.log("Add Edge F to E")
+graph.addEdge('F', 'E')
+const result = DFS(graph)
+
+console.log("My Graph: ")
+console.log(graph.toString())
+
+console.log("Topological ordering by using DFS:")
+
+const fTimes = result.finished
+let s = ''
+for (let count = 0; count < myVertices.length; count++){
+    let max = 0
+    let maxName = null
+    for (let i = 0; i < myVertices.length; i++) {
+        if(fTimes[myVertices[i]] > max) {
+            max = fTimes[myVertices[i]]
+            maxName = myVertices[i]
+        }
+    }
+    if(Object.keys(fTimes).length === 1){
+        s += maxName  
+    }else{
+        s += maxName + ' - ' 
+    }
+
+    delete fTimes[maxName]
+}
+
+console.log(s)  
