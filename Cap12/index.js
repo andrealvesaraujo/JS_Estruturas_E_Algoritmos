@@ -1,6 +1,7 @@
 import {Dictionary,Queue, Stack } from "/data_structures.js"
 
 console.log("Graph");
+console.log("")
 
 const Colors = {
     WHITE: 0,
@@ -86,6 +87,8 @@ graph.addEdge('B', 'F')
 console.log("Add Edge E to I")
 graph.addEdge('E', 'I')
 
+console.log("")
+
 console.log("My Graph: ")
 console.log(graph.toString())
 
@@ -101,6 +104,7 @@ const initializeColors = (vertices) => {
 console.log("---------------------------------------------------------")
 
 console.log("Breadth First Search(BFS)")
+console.log("")
 
 
 export const breadthFirstSearch = (graph, startVertext, callback) => {
@@ -163,6 +167,7 @@ const BFS = (graph, startVertext) => {
         predecessors
     }
 }
+console.log("")
 
 console.log("Using BFS to find shortestPath to A for every vertex:")
 const shortestPathA = BFS(graph, myVertices[0])
@@ -183,6 +188,7 @@ for(let i = 0; i < myVertices.length; i++){
 
 console.log("---------------------------------------------------------")
 console.log("Depth First Search(DFS)")
+console.log("")
 
 
 const depthFirstSearch = (graph, callback) => {
@@ -275,9 +281,12 @@ graph.addEdge('C', 'F')
 console.log("Add Edge F to E")
 graph.addEdge('F', 'E')
 const result = DFS(graph)
+console.log("")
 
 console.log("My Graph: ")
 console.log(graph.toString())
+
+console.log("")
 
 console.log("Topological ordering by using DFS:")
 
@@ -313,8 +322,17 @@ graph = [[0,2,4,0,0,0],
         [0,0,0,3,0,2],
         [0,0,0,0,0,0]]
 
-console.log("New Graph of adjacency matrix:")        
-console.log(graph)        
+console.log("Graph of adjacency matrix:")        
+
+for (let i = 0; i < graph.length; i++) {
+    let matrixVal = ""
+    for (let j = 0; j < graph.length; j++) {
+        matrixVal += `${graph[i][j] === Infinity ? "INF" : graph[i][j] } `
+    }
+    console.log(matrixVal)
+}
+console.log("")
+
 
 let INF = Number.MAX_SAFE_INTEGER
 const dijkstra = (graph, src) => {
@@ -350,7 +368,10 @@ const minDistance = (dist,visited) => {
     return minIndex
 }
 console.log("Dijkstra algoritm to find shortest path from first Vertex:")
-console.log(dijkstra(graph, 0))
+let distValue = dijkstra(graph, 0)
+for (let i = 0; i < graph.length; i++) {
+    console.log(i+" "+distValue[i])
+}
 
 console.log("---------------------------------------------------------")
 
@@ -364,8 +385,16 @@ graph = [
     [INF, INF, INF, INF, INF, INF]
   ];
 
-console.log("New Graph of adjacency matrix:")        
-console.log(graph)    
+console.log("Graph of adjacency matrix:")        
+for (let i = 0; i < graph.length; i++) {
+    let matrixVal = ""
+    for (let j = 0; j < graph.length; j++) {
+        matrixVal += `${graph[i][j] === Infinity ? "INF" : graph[i][j] } `
+    }
+    console.log(matrixVal)
+} 
+console.log("")
+
 
 const floydWarshall = graph => {
     const dist = []
@@ -397,7 +426,14 @@ const floydWarshall = graph => {
 
 console.log("FloydWarshall algoritm to find shortest path to all vertex:")
 
-console.log(floydWarshall(graph))
+let dist = floydWarshall(graph)
+for (let i = 0; i < graph.length; i++) {
+    let matrixVal = ""
+    for (let j = 0; j < graph.length; j++) {
+        matrixVal += `${dist[i][j] === Infinity ? "INF" : dist[i][j] } `
+    }
+    console.log(matrixVal)
+}
 
 console.log("---------------------------------------------------------")
 
@@ -408,9 +444,15 @@ graph = [[0,2,4,0,0,0],
         [0,2,3,3,0,2],
         [0,0,0,2,2,0]]
 
-console.log("New Graph of adjacency matrix:")        
-console.log(graph)        
-
+console.log("Graph of adjacency matrix:")        
+for (let i = 0; i < graph.length; i++) {
+    let matrixVal = ""
+    for (let j = 0; j < graph.length; j++) {
+        matrixVal += `${graph[i][j] === Infinity ? "INF" : graph[i][j] } `
+    }
+    console.log(matrixVal)
+}       
+console.log("")
 
 const minKey = (dist,visited) => {
     let min = INF
@@ -449,10 +491,98 @@ const prim = graph =>{
     return {parent , key}
 }
 
-console.log("PRim algoritm to find Minimum Spanning Tree(MST):")
+console.log("Prim algoritm to find Minimum Spanning Tree(MST):")
 
-const {parent, key} = prim(graph)
+let {parent, key} = prim(graph)
 console.log("Edge   Weight")
 for(let i = 1; i < parent.length; i++){
     console.log(parent[i] + " - " + i + "   " + key[i])
+}
+
+console.log("---------------------------------------------------------")
+
+graph = [
+    [0, 2, 4, 0, 0, 0],
+    [2, 0, 2, 4, 2, 0],
+    [4, 2, 0, 0, 3, 0],
+    [0, 4, 0, 0, 3, 2],
+    [0, 2, 3, 3, 0, 2],
+    [0, 0, 0, 2, 2, 0]
+];
+
+console.log("Graph of adjacency matrix:")        
+for (let i = 0; i < graph.length; i++) {
+    let matrixVal = ""
+    for (let j = 0; j < graph.length; j++) {
+        matrixVal += `${graph[i][j] === Infinity ? "INF" : graph[i][j] } `
+    }
+    console.log(matrixVal)
+}       
+console.log("")
+
+const initializeCost = graph => {
+  const cost = [];
+  const { length } = graph;
+  for (let i = 0; i < length; i++) {
+    cost[i] = [];
+    for (let j = 0; j < length; j++) {
+      if (graph[i][j] === 0) {
+        cost[i][j] = INF;
+      } else {
+        cost[i][j] = graph[i][j];
+      }
+    }
+  }
+  return cost;
+};
+
+const find = (i, parent) => {
+    while (parent[i]) {
+      i = parent[i]; 
+    }
+    return i;
+  };
+  const union = (i, j, parent) => {
+    if (i !== j) {
+      parent[j] = i;
+      return true;
+    }
+    return false;
+  };
+
+const kruskal = graph => {
+    const { length } = graph;
+    const parent = [];
+    let ne = 0;
+    let a;
+    let b;
+    let u;
+    let v;
+    const cost = initializeCost(graph);
+    while (ne < length - 1) {
+      for (let i = 0, min = INF; i < length; i++) {
+        for (let j = 0; j < length; j++) {
+          if (cost[i][j] < min) {
+            min = cost[i][j];
+            a = u = i;
+            b = v = j;
+          }
+        }
+      }
+      u = find(u, parent);
+      v = find(v, parent);
+      if (union(u, v, parent)) {
+        ne++;
+      }
+      cost[a][b] = cost[b][a] = INF;
+    }
+    return parent;
+  };
+
+console.log("Kruskal algoritm to find Minimum Spanning Tree(MST):")
+
+parent  = kruskal(graph)
+console.log("Edge   Weight")
+for(let i = 1; i < graph.length; i++){
+    console.log(parent[i] + " - " + i + '   ' + graph[i][parent[i]])
 }
