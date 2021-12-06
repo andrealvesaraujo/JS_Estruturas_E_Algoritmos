@@ -398,3 +398,61 @@ const floydWarshall = graph => {
 console.log("FloydWarshall algoritm to find shortest path to all vertex:")
 
 console.log(floydWarshall(graph))
+
+console.log("---------------------------------------------------------")
+
+graph = [[0,2,4,0,0,0],
+        [2,0,2,4,2,0],
+        [4,2,0,0,3,0],
+        [0,4,0,0,3,2],
+        [0,2,3,3,0,2],
+        [0,0,0,2,2,0]]
+
+console.log("New Graph of adjacency matrix:")        
+console.log(graph)        
+
+
+const minKey = (dist,visited) => {
+    let min = INF
+    let minIndex = -1
+    for(let v = 0; v < dist.length; v++){
+        if(visited[v] === false && dist[v] <=min){
+            min = dist[v]
+            minIndex = v
+        }
+    }
+    return minIndex
+}
+
+INF = Number.MAX_SAFE_INTEGER
+const prim = graph =>{
+    const parent = []
+    const key = []
+    const visited = []
+    const {length} = graph
+    for(let i = 0; i < length; i++){
+        key[i] = INF
+        visited[i] = false
+    }
+    key[0] = 0
+    parent[0] = -1
+    for(let i = 0; i < length - 1; i++){
+        const u = minKey(key, visited)
+        visited[u] = true
+        for(let v = 0; v < length; v++){
+            if(graph[u][v] && !visited[v] && graph[u][v] < key[v]){
+                parent[v] = u 
+                key[v] = graph[u][v]
+            }
+        }
+    }
+    return {parent , key}
+}
+
+console.log("PRim algoritm to find Minimum Spanning Tree(MST):")
+
+const {parent, key} = prim(graph)
+console.log("Edge   Weight")
+for(let i = 1; i < parent.length; i++){
+    console.log(parent[i] + " - " + i + "   " + key[i])
+}
