@@ -197,3 +197,162 @@ console.log(array.join())
 console.log("")
 
 console.log("----------------------------------------------------------------")
+
+
+array = [5,4,3,2,3,1]
+console.log("Creating Non Sorted Array:")
+console.log(array.join())
+console.log("")
+
+function countingSort(array) {
+    if(array.length < 2){
+        return array
+    }
+    const maxValue = findMaxValue(array)
+    const counts = new Array(maxValue+1)
+    array.forEach(element =>{
+        if(!counts[element]){
+            counts[element] = 0
+        }
+        counts[element] ++
+    })
+    let sortedIndex = 0
+    counts.forEach((count, i)=>{
+        while(count > 0){
+            array[sortedIndex++] = i
+            count--
+        }
+    })
+    return array
+}
+
+function findMaxValue(array) {
+    let max = array[0]
+    for (let i = 1; i < array.length; i++) {
+        if(array[i]>max){
+            max = array[i]
+        }
+    }
+    return max
+}
+
+console.log("Counting Sort:")
+array =  countingSort(array)
+console.log(array.join())
+console.log("")
+
+console.log("----------------------------------------------------------------")
+
+array = [5,4,3,2,6,1,7,10,9,8]
+console.log("Creating Non Sorted Array:")
+console.log(array.join())
+console.log("")
+
+function bucketSort(array, bucketSize=5) {
+    if(array.length < 2){
+        return array
+    }
+    const buckets = createBuckets(array, bucketSize)
+    return sortBuckets(buckets)
+}
+
+function createBuckets(array, bucketSize) {
+    let minValue = array[0] 
+    let maxValue = array[0]
+    for (let i = 1; i < array.length; i++) {
+        if(array[i] < minValue){
+            minValue = array[i]
+        }else if(array[i] > maxValue){
+            maxValue = array[i]
+        }
+    }
+    const bucketCount = Math.floor((maxValue - minValue) / bucketSize) + 1
+    const buckets = []
+    for (let i = 0; i < bucketCount; i++) {
+        buckets[i] = []
+    }
+    for (let i = 0; i < array.length; i++){
+        const bucketIndex = Math.floor((array[i] - minValue) / bucketSize)
+        buckets[bucketIndex].push(array[i])
+    }
+    return buckets
+}
+
+function sortBuckets(buckets) {
+    const sortedArray = []
+    for (let i = 0; i < buckets.length; i++) {
+        if(buckets[i] != null){
+            insertionSort(buckets[i])
+            sortedArray.push(...buckets[i])
+        }
+    }
+    return sortedArray
+}
+
+console.log("Bucket Sort:")
+array =  bucketSort(array)
+console.log(array.join())
+console.log("")
+
+console.log("----------------------------------------------------------------")
+
+
+array = [456,789,123,1,32,4,243,321,42,90,10,999]
+console.log("Creating Non Sorted Array:")
+console.log(array.join())
+console.log("")
+
+function findMinValue(array) {
+    let min = array[0]
+    for (let i = 1; i < array.length; i++) {
+        if(array[i]<min){
+            min = array[i]
+        }
+    }
+    return min
+}
+
+function radixSort(array, radixBase=5) {
+    if(array.length < 2){
+        return array
+    }
+    const minValue = findMinValue(array)
+    const maxValue = findMaxValue(array)
+    let significantDigit = 1
+    while((maxValue - minValue) / significantDigit >=1){
+        array = countingSortForRadix(array, radixBase, significantDigit, minValue)
+        significantDigit *= radixBase
+    }
+    return array
+}
+
+function countingSortForRadix(array, radixBase, significantDigit, minValue) {
+    let bucketsIndex
+    const buckets = []
+    const aux = []
+    for(let i = 0; i < radixBase; i++) {
+        buckets[i] = 0
+    }
+    for(let i = 0; i < array.length; i++) {
+        bucketsIndex = Math.floor(((array[i]-minValue) / significantDigit) % radixBase)
+        buckets[bucketsIndex]++
+    }
+    for(let i = 1; i < radixBase; i++) {
+        buckets[i]+=buckets[i-1]
+    }
+    for(let i = array.length - 1; i >=0; i--){
+        bucketsIndex = Math.floor(((array[i]-minValue) / significantDigit) % radixBase)
+        aux[--buckets[bucketsIndex]] = array[i]
+    }
+    for(let i = 0; i < array.length; i++) {
+        array[i] = aux[i]
+    }
+    return array
+}
+
+console.log("Radix Sort:")
+array =  radixSort(array)
+console.log(array.join())
+console.log("")
+
+console.log("----------------------------------------------------------------")
