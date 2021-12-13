@@ -1,4 +1,4 @@
-import { Compare, defaultCompare} from './utils.js'
+import { Compare, defaultCompare, defaultEquals, defaultDiff} from './utils.js'
 
 console.log("Sorting and Search algorithms")
 
@@ -356,3 +356,121 @@ console.log(array.join())
 console.log("")
 
 console.log("----------------------------------------------------------------")
+
+
+array = [5,4,3,2,1]
+console.log("Creating Non Sorted Array:")
+console.log(array.join())
+console.log("")
+
+const DOES_NOT_EXIST = -1
+
+function sequentialSearch(array,value, equalsFn = defaultEquals) {
+    for (let i = 0; i< array.length; i++) {
+        if(equalsFn(value,array[i])){
+            return i
+        }
+    }
+    return DOES_NOT_EXIST
+}
+
+console.log("Linear/Sequential Search:")
+let resultSearch  =  sequentialSearch(array,3)
+console.log("Search number 3. Index of Array: ",resultSearch)
+console.log("")
+
+console.log("----------------------------------------------------------------")
+
+array = [8,7,6,5,4,3,2,1]
+console.log("Creating Non Sorted Array:")
+console.log(array.join())
+console.log("")
+
+function lesserOrEquals(a,b,compareFn){
+    const comp = compareFn(a,b)
+    return comp === Compare.LESS_THAN || comp === Compare.EQUALS
+}
+
+function binarySearch(array,value, compareFn = defaultCompare) {
+    const sortedArray = quickSort(array)
+    let low = 0 
+    let high = sortedArray.length - 1
+    while(lesserOrEquals(low,high,compareFn)){
+        const mid = Math.floor((low + high)/2)
+        const element = sortedArray[mid]
+        if(compareFn(element,value) === Compare.LESS_THAN){
+            low = mid+1
+        }else if(compareFn(element,value) === Compare.BIGGER_THAN){
+            high = mid - 1
+        }else{
+            return mid
+        }
+    }
+    return DOES_NOT_EXIST
+}
+
+console.log("Binary Search:")
+resultSearch  =  binarySearch(array,2)
+console.log("Search number 2. Index of Array: ",resultSearch)
+console.log("")
+
+console.log("----------------------------------------------------------------")
+
+array = [1,2,3,4,5,6,7,8,9,10]
+console.log("Creating Sorted Array:")
+console.log(array.join())
+console.log("")
+
+function biggerOrEquals(a,b,compareFn){
+    const comp = compareFn(a,b)
+    return comp === Compare.BIGGER_THAN || comp === Compare.EQUALS
+}
+
+function interpolationSearch(array,value, compareFn = defaultCompare, equalsFn = defaultEquals, diffFn = defaultDiff) {
+    const {length} = array
+    let low = 0 
+    let high = length - 1
+    let position = -1 
+    let delta = - 1
+    while(low<=high && biggerOrEquals(value, array[low], compareFn) && lesserOrEquals(value, array[high], compareFn)){
+        delta = diffFn(value, array[low]) / diffFn(array[high], array[low])
+        position = low +  Math.floor((high - low) * delta)
+        if(equalsFn(array[position], value)){
+            return position
+        }
+        if(compareFn(array[position], value) === Compare.LESS_THAN){
+            low = position + 1
+        }else{
+            high = position - 1
+        }
+    }
+    return DOES_NOT_EXIST
+}
+
+console.log("Interpolation Search:")
+resultSearch  =  interpolationSearch(array,4)
+console.log("Search number 4. Index of Array: ",resultSearch)
+console.log("")
+
+console.log("----------------------------------------------------------------")
+
+array = [1,2,3,4,5]
+console.log("Creating Sorted Array:")
+console.log(array.join())
+console.log("")
+
+function shuffle(array) {
+    for (let i = array.length - 1; i>0; i--){
+        const randomIndex = Math.floor(Math.random() * (i+1))
+        swap(array,i,randomIndex)
+    }
+    return array
+}
+
+console.log("Shuffle Algoritm:")
+const resultShuffle  =  shuffle(array)
+console.log("Shuffled array: ",resultShuffle)
+console.log("")
+
+console.log("----------------------------------------------------------------")
+
