@@ -169,11 +169,11 @@ function findValues(n, capacity, kS, weights, values) {
     }
 }
 
-const weights = [2,3,4]
-const values  = [3,4,5] 
-const capacity = 5
+let weights = [2,3,4]
+let values  = [3,4,5] 
+let capacity = 5
 const n = values.length
-console.log("Itens {weight,value}:")
+console.log("Itens {weight,value} of Capacity 5:")
 console.log("[{2,3},{3,4},{4,5}]")
 console.log("Total value that can be carried : ", knapSack(capacity,weights, values,n))
 console.log("")
@@ -314,3 +314,30 @@ console.log("minCoinChange of 6 in [1,3,4]: ", resultGreedMinCoin)
 console.log("")
 
 console.log("----------------------------------------------------------------")
+
+console.log("KnapSack Problem")
+
+function knapSackGreed(capacity, weights, values) {
+    const n = values.length
+    let load =0
+    let val=0
+    for(let i=0; i<n && load < capacity; i++) {
+        if(weights[i] <= capacity - load){
+            val+=values[i]
+            load+=weights[i]
+        }else{
+            const r = (capacity-load) / weights[i]  
+            val += r*values[i]
+            load+=weights[i]
+        }
+    }
+    return val
+}
+
+weights = [2,3,4]
+values  = [3,4,5] 
+capacity = 6
+console.log("Itens {weight,value} of Capacity 6:")
+console.log("[{2,3},{3,4},{4,5}]")
+console.log("Total value that can be carried : ", knapSackGreed(capacity,weights, values))
+console.log("")
