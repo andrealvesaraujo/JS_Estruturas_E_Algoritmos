@@ -402,7 +402,7 @@ const maze = [
 
 let resultBacktracking =  ratInAMaze(maze)
 console.log("Rat in a Maze Path: ")
-console.log(resultBacktracking)
+console.log(resultBacktracking.join("\n"))
 console.log("")
 
 console.log("----------------------------------------------------------------")
@@ -452,17 +452,17 @@ function isMatrixSafe(matrix, row,col, num){
         !usedInRow(matrix, row, num) &&
         !usedInCol(matrix, col, num) && 
         !usedInBox(matrix, row - (row % 3), col - (col % 3), num)
-    )
-}
-
-function usedInRow(matrix, row, num){
-    for(let col= 0; col < matrix.length; col++){
-        if(matrix[row][col] === num){
-            return true
-        }
+        )
     }
-    return false
-}
+    
+    function usedInRow(matrix, row, num){
+        for(let col= 0; col < matrix.length; col++){
+            if(matrix[row][col] === num){
+                return true
+            }
+        }
+        return false
+    }
 function usedInCol(matrix, col, num){
     for(let row= 0; row < matrix.length; row++){
         if(matrix[row][col] === num){
@@ -496,7 +496,170 @@ const sudokuGrid = [
 
 resultBacktracking =  sudokuSolver(sudokuGrid)
 console.log("Solution Of Sudoku: ")
-console.log(resultBacktracking)
+console.log(resultBacktracking.join("\n"))
 console.log("")
 
 console.log("----------------------------------------------------------------")
+
+console.log("Functional Programming:")
+
+console.log("----------------------------------------------------------------")
+
+console.log("Imperative Print Array Method")
+
+const printArray = function(array) {
+    for (let i=0; i<array.length; i++){
+        console.log(array[i])
+    }
+}
+
+printArray([1,2,3,4,5])
+
+console.log("Functional Print Array Method")
+
+let forEach = function (array, action) {
+    for(let i = 0; i < array.length; i++){
+        action(array[i])
+    }
+}
+
+let logItem = function(item){
+    console.log(item)
+}
+
+forEach([1,2,3,4,5,7,8], logItem)
+console.log("")
+
+console.log("----------------------------------------------------------------")
+
+console.log("ES6 Functional Programming Examples:")
+
+console.log("----------------------------------------------------------------")
+
+console.log("Find Min Value in Array '[8,6,4,5,9]'")
+
+const findMinArray = function(array) {
+    var minValue = array[0]
+    for (let i=1; i<array.length; i++){
+        if(minValue > array[i]){
+            minValue = array[i]
+        }
+    }
+    return minValue
+}
+
+console.log(findMinArray([8,6,4,5,9]))
+
+console.log("Functional Find Min Value in Array '[8,6,4,5,9]'")
+
+// const min_ = function (array) {
+//     return Math.min(...array)
+// }
+
+const min_ = array => Math.min(...array)
+console.log(min_([8,6,4,5,9]))
+console.log("")
+
+forEach = (array, action) => array.forEach(item => action(item));
+
+logItem = (item) => console.log(item)
+
+console.log("----------------------------------------------------------------")
+
+console.log("Days of Week Values Before ES2015+ in 'Monday, Tuesday and Wednesday'")
+
+const daysOfWeek = [
+    {name: 'Monday', value:1},
+    {name: 'Tuesday', value:2},
+    {name: 'Wednesday', value:3},
+]
+
+let daysOfWeekValues_ = []
+for (let i = 0; i < daysOfWeek.length; i++) {
+    daysOfWeekValues_.push(array[i])
+}
+
+console.log(daysOfWeekValues_.join(', '))
+
+console.log("Days of Week Values After ES2015+ in 'Monday, Tuesday and Wednesday'")
+
+const daysOfWeekValues = daysOfWeek.map(day => day.value)
+
+console.log(daysOfWeekValues.join(', '))
+console.log("")
+
+console.log("Positive Numbers Before ES2015+ in Array '[-1,1,2,-2]'")
+
+const positiveNumbers_ = function(array){
+    let positive = []
+    for (let i = 0; i < array.length; i++) {
+        if(array[i] >=0){
+            positive.push(array[i])
+        }
+    }
+    return positive
+}
+
+console.log(positiveNumbers_([-1,1,2,-2]).join(', '))
+
+console.log("Positive Numbers After ES2015+ in Array '[-1,1,2,-2]'")
+
+const positiveNumbers = (array) => array.filter(num => (num>=0))
+
+console.log(positiveNumbers([-1,1,2,-2]).join(', '))
+console.log("")
+
+console.log("Sum Method Before ES2015+ in Array '[1,2,3,4,5]'")
+
+let sumValues = function(array){
+    let total = array[0]
+    for (let i = 1; i < array.length; i++) {
+        total+=array[i]
+    }
+    return total
+}
+
+console.log(sumValues([1,2,3,4,5]))
+
+console.log("Sum Method After ES2015+ in Array '[1,2,3,4,5]'")
+
+let sum = function(array) {
+   return array.reduce(function(a,b) {
+       return a + b  
+   })  
+}
+ 
+sum = (array) => array.reduce((a,b) => a+b)
+
+console.log(sum([1,2,3,4,5]))
+console.log("")
+
+console.log("Merge Array '[[1,2,3], [4,5], [6]]' Before of ES2015+")
+
+const mergeArrays_ = function(arrays){
+    const count = arrays.length
+    let newArray = []
+    let k = 0
+    for (let i = 0; i < count; i++) {
+        for(var j = 0; j < arrays[i].length; j++) {
+            newArray[k++] = arrays[i][j]
+        }
+    }
+    return newArray
+}
+
+console.log(mergeArrays_([[1,2,3], [4,5], [6]]))
+
+console.log("Merge Array '[[1,2,3], [4,5], [6]]' After of ES2015+")
+
+let mergeArrays = function(array) {
+   return array.reduce(function(p,n) {
+       return p.concat(n)  
+   })  
+}
+ 
+mergeArrays = (array) => [].concat(...array)
+
+console.log(mergeArrays([[1,2,3], [4,5], [6]]))
+
+console.log("")
