@@ -11,7 +11,7 @@ Projeto javascript que contém as estruturas de dados e algoritmos do livro:
 
 ![Capa](https://user-images.githubusercontent.com/18336972/133320421-e7566333-7196-4f49-8259-1275065bc257.jpg)
 
-## Capitulos:
+## Capítulos:
 
 * 01: Javascript - Uma visão geral rápida
 * 02: [Visão Geral sobre ECMAScript e TypeScript](https://github.com/andrealvesaraujo/JS_Estruturas_E_Algoritmos/tree/main/Cap2)
@@ -28,3 +28,10 @@ Projeto javascript que contém as estruturas de dados e algoritmos do livro:
 * 13: [Algoritmos de Ordenação e Busca](https://github.com/andrealvesaraujo/JS_Estruturas_E_Algoritmos/tree/main/Cap13)
 * 14: [Design de algoritmos e técnicas](https://github.com/andrealvesaraujo/JS_Estruturas_E_Algoritmos/tree/main/Cap14)
 * 15: [Complexidade de Algoritmos](https://github.com/andrealvesaraujo/JS_Estruturas_E_Algoritmos/tree/main/Cap15)
+
+
+## ☕ Rodar Projeto:
+
+1. Entrar na pasta do capítulo desejado
+2. Abrir arquivo html
+3. Abrir console do Google Developer Tools(Ctrl+Shift+J)
